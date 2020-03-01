@@ -1,0 +1,31 @@
+1) Odrediti srednju vrednost elemenata celobrojnog niza.
+
+2) Odrediti maksimalnu (minimalnu) vrednost u celobrojnom nizu.
+
+3) Ispisati dužinu svakog elementa u nizu stringova.
+
+4) Odrediti element u nizu stringova sa najvećom dužinom.
+
+5) Odrediti broj elemenata u nizu stringova koji sadrže slovo 'a'.
+
+6) Odrediti broj elemenata u nizu stringova koji počinju na slovo 'a' ili 'A'.
+
+7) Na osnovu celobrojnog niza $a[0], $a[1], … formirati niz $b[0], $b[1], ... koji sadrži samo pozitivne brojeve.
+
+8) Dati su nizovi $a[0], $a[1], …, $a[n - 1] i  $b[0], $b[1], …, $b[n - 1]. Formirati niz $c[0], $c[1], …, $c[2n – 1] čiji su elementi $a[0], $b[0], $a[1], $b[1], …, $a[n - 1], $b[n - 1].
+
+9) Dati su nizovi $a[0], $a[1], …, $a[n - 1] i  $b[0], $b[1], …, $b[n - 1]. Formirati niz $c[0], $c[1], …, $c[n – 1] čiji su elementi $a[0] * $b[0], $a[1] * $b[1], …, $a[n – 1] * $b[n – 1].
+
+10) Dat je niz elemenata u obliku MarkaAuta/Godište.
+Ispisati sve automobile, kao i njihova godišta.
+Ispisati automobile koji su stariji od 10 godina.
+Ispisati automobile čija Marka sarži string “Opel”, a proizvedena su posle 2000. godine.
+
+11) Dat je niz elemenata u obliku ImeOsobe/Visina.
+Ispisati sve osobe sa njihovim visinama.
+Ispisati sve natprosečno visoke osobe.
+Ispisati sve osobe koje imaju maksimalnu visinu.
+Ispisati sve osobe sa visinom ispod proseka, a čije ime počinje na slovo 'V'.
+
+
+
