@@ -1,0 +1,28 @@
+<?php
+
+$dbhost = "localhost";
+$dbname = "dmreza";
+$dbuser = "dmadmin";
+$dbpassword = "dmadmin123";
+
+// Objekat konekcije ka bazi
+$connection = new mysqli($dbhost, $dbuser, $dbpassword, $dbname);
+if($connection->connect_error != null) {
+    die($connection->connect_error);
+}
+
+// Funkcija za izvrsavanje proizvoljnih upita u bazu podataka
+function queryMysql($query) {
+    global $connection;
+    $result = $connection->query($query);
+    if(!$result) {
+        die($connection->error);
+    }
+    return $result;
+}
+
+// Funkcija za izvrsavanje CREATE TABLE upita
+function createTable($name, $query) {
+    queryMysql("CREATE TABLE IF NOT EXISTS $name($query)");
+    echo "Table '$name' created or already exists.<br>";
+}

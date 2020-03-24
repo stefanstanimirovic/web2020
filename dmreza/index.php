@@ -1,15 +1,18 @@
 <?php
-// 1) Proceduralni (ugradjene funkcije)
-// 2) OOP (metode objekata)
-// 2.1) mysqli
-// 2.2) PDO
+    // ukljuci header.php
+    // include "header.php"
+    // require "header.php"
+    // include_once "header.php"
+    // require_once "header.php"
 
-$dbhost = "localhost";
-$dbname = "dmreza";
-$dbuser = "dmadmin";
-$dbpass = "dmadmin123";
+    require_once "header.php";
+?>
+        <div class="content">
+            <?php 
+            
 
-// Objekat konekcije
-$connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-
-var_dump($connection);
+            ?>
+        </div>
+    </div>
+</body>
+</html>
