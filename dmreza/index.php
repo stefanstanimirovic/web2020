@@ -8,10 +8,11 @@
     require_once "header.php";
 ?>
         <div class="content">
+            <p>
             <?php 
-            
-
+                echo "Welcome, $user!";
             ?>
+            </p>
         </div>
     </div>
 </body>

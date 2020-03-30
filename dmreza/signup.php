@@ -42,6 +42,7 @@
     */
 ?>
     <div class="content">
+        <h2>Create a new account</h2>
         <div class="error">
             <?php echo $error; ?>
         </div>
