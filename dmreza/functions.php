@@ -26,3 +26,14 @@ function createTable($name, $query) {
     queryMysql("CREATE TABLE IF NOT EXISTS $name($query)");
     echo "Table '$name' created or already exists.<br>";
 }
+
+// Funkcija za tretiraje inputa iz forme
+function sanitizeString($text)
+{
+    $text = strip_tags($text);
+    $text = htmlentities($text);
+    $text = stripslashes($text);
+    global $connection;
+    $text = $connection->real_escape_string($text);
+    return $text;
+}
