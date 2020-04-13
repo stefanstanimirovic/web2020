@@ -8,7 +8,7 @@
     }
 
     $fname = $lname = $email = $gender = $lang = $bio = "";
-    $fnameError = $lnameError = $emailError = $genderError = $langError = "";
+    $fnameError = $lnameError = $emailError = $genderError = $langError = $imageError = "";
 
     $result = queryMysql("SELECT * FROM profiles WHERE user_id = $id");
     if($result->num_rows > 0)
@@ -97,6 +97,81 @@
             }
         }
     }
+
+    // Da li je korisnik poslao slicicu
+    if(isset($_FILES['image']['name']) && !empty($_FILES['image']['name']))
+    {
+        // Da li postoji folder za profilne slicice, i ako ne postoji, napravi ga
+        if(!file_exists('profile_images/'))
+        {
+            mkdir('profile_images/', 0777, true);
+        }
+
+        // Svaki korisnik ima svoju sliku u formatu id.jpg
+        $saveto = "profile_images/$id.jpg";
+
+        // Prebacuje se slicica iz privremene lokacije u lokaciju u folderu projekta
+        move_uploaded_file($_FILES['image']['tmp_name'], $saveto);
+
+        // Redimenzioniranje slicice:
+        // 1) Provera ekstenzije datoteke i kreiranje nove slike na osnovu poslate iz forme
+        $typeok = true;
+        switch($_FILES['image']['type'])
+        {
+            case "image/gif":
+                $src = imagecreatefromgif($saveto);
+                break;
+            case "image/jpeg":
+            case "image/jpg":
+                $src = imagecreatefromjpeg($saveto);
+                break;
+            case "image/png":
+                $src = imagecreatefrompng($saveto);
+                break;
+            default:
+                $typeok = false;
+        }
+
+        if(!$typeok)
+        {
+            $imageError = "Allowed types for profile photo are: gif/jpeg/jpg/png!";
+        }
+        else
+        {
+            // 2) Menjamo dimenzije nove slike
+            list($w, $h) = getimagesize($saveto);
+
+            $max = 100;
+            $tw = $w;
+            $th = $h;
+            if($w > $h && $w > $max)
+            {
+                $th = $max * $h / $w;
+                $tw = $max;
+            }
+            elseif($h > $w && $h > $max)
+            {
+                $tw = $max * $w / $h;
+                $th = $max;
+            }
+            else
+            {
+                $th = $tw = $max;
+            }
+
+            // 3) Kreiranje nove slicice sa zadatim dimenzijama ($tw x $th)
+            $tmp = imagecreatetruecolor($tw, $th);
+            imagecopyresampled($tmp, $src, 0, 0, 0, 0, $tw, $th, $w, $h);
+            imageconvolution($tmp, array(array(-1, -1, -1), array(-1, 16, -1),
+                array(-1, -1, -1)), 8, 0);
+            imagejpeg($tmp, $saveto);
+            imagedestroy($src);
+            imagedestroy($tmp);
+        }
+
+    }
+
+    showProfile($id);
 ?>
 
     <div class="content">
@@ -139,6 +214,7 @@
             <br>
             <label for="image">Profile photo:</label>
             <input type="file" name="image" id="image">
+            <span class="error"><?php echo $imageError ?></span>
             <br>
             <input type="submit" value="Save Profile">
         </form>

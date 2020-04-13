@@ -11,6 +11,10 @@
             <p>
             <?php 
                 echo "Welcome, $user!";
+                if(isset($id))
+                {
+                    showProfile($id);
+                }
             ?>
             </p>
         </div>

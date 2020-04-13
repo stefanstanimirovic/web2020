@@ -1,6 +1,7 @@
 <?php
     // Ukljucuje se sesija - PRVA LINIJA KODA
     session_start();
+    require_once "functions.php";
 
     $loggedin = false;
     $user = "Guest";
@@ -9,9 +10,14 @@
         $loggedin = true;
         $id = $_SESSION['id']; // $id - id logovanog korisnika
         $user = $_SESSION['username']; // $user - username logovanog korisnika
+        $result = queryMysql("SELECT * FROM profiles WHERE user_id = $id");
+        if($result->num_rows)
+        {
+            $row = $result->fetch_assoc();
+            $user = $row['first_name'] . " " . $row['last_name'];
+        }
     }
 
-    require_once "functions.php";
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +30,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="social-networking.jpg" alt="Drustvena mreza">
+        <img src="social-networking.jpg" alt="Drustvena mreza" id="header_image">
         <ul class="menu">
             <?php if($loggedin) { ?>
                 <li>

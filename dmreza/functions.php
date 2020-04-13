@@ -37,3 +37,26 @@ function sanitizeString($text)
     $text = $connection->real_escape_string($text);
     return $text;
 }
+
+// Funkcija za prikaz korisnickog profila
+function showProfile($id)
+{
+    $result = queryMysql("SELECT * FROM profiles WHERE user_id = $id");
+    if($result->num_rows)
+    {
+        $row = $result->fetch_assoc();
+        echo "<div class='p'>";
+        if(file_exists("profile_images/$id.jpg"))
+        {
+            echo "<img src='profile_images/$id.jpg' class='pf'>";
+        }
+        echo "<div class='pi'>";
+        echo $row['first_name'] . " " . $row['last_name'];
+        echo "<br>";
+        echo $row['email'];
+        echo "<br>";
+        echo $row['bio'];
+        echo "</div>";
+        echo "</div>";
+    }
+}

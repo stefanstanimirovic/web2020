@@ -24,3 +24,13 @@ createTable('profiles',
     FOREIGN KEY(user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE NO ACTION
     '
 );
+
+createTable('friends', 
+    'id INT UNSIGNED AUTO_INCREMENT,
+    sender_id INT UNSIGNED NOT NULL,
+    receiver_id INT UNSIGNED NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(sender_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE NO ACTION,
+    FOREIGN KEY(receiver_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE NO ACTION
+    '
+);
