@@ -36,7 +36,26 @@
         echo "<h3>$name Profile:</h3>";
 
         showProfile($userId);
-        die("</div></body></html>");
+        die("<br><br><a href='members.php'>Go back to the previous page.</a></div></body></html>");
+    }
+    if(isset($_GET['add']))
+    {
+        $userId = sanitizeString($_GET['add']); 
+        // $userId - id korisnika kome se salje zahtev za pracenje
+        // $id - id korisnika koji salje zahtev za pracenje (logovani korisnik)
+        $result = queryMysql("SELECT * FROM friends WHERE sender_id = $id
+                                AND receiver_id = $userId");
+        if($result->num_rows == 0)
+        {        
+            queryMysql("INSERT INTO friends(sender_id, receiver_id)
+                VALUES ($id, $userId)");
+        }
+    }
+    if(isset($_GET['remove']))
+    {
+        $userId = sanitizeString($_GET['remove']);
+        queryMysql("DELETE FROM friends WHERE sender_id = $id
+                        AND receiver_id = $userId");
     }
 ?>
 
@@ -64,6 +83,47 @@
                 echo $row['username'];
                 echo ")";
                 echo "</a>";
+                echo "&nbsp;&nbsp;";
+
+                // Proveravamo u kojoj smo relaciji sa korisnikom
+                // 1) Samo ja drugog korisnika pratim
+                // 2) Samo drugi korisnik mene prati
+                // 3) Uzajamno pracenje sa drugim korisnikom
+
+                // Provera da li ja pratim datog korisnika
+                $result1 = queryMysql("SELECT * FROM friends WHERE
+                            sender_id = $id AND receiver_id = $userId");
+                $t1 = $result1->num_rows; // 0 ili 1
+
+                // Provera da li dati korisnik mene prati
+                $result2 = queryMysql("SELECT * FROM friends WHERE
+                            sender_id = $userId AND receiver_id = $id");
+                $t2 = $result2->num_rows; // 0 ili 1
+                
+                $additionalText = "";
+                if($t1 + $t2 > 1)
+                {
+                    echo " is a mutual friend ";
+                }
+                elseif($t1)
+                {
+                    echo " you are following ";
+                }
+                elseif($t2)
+                {
+                    echo " is following you ";
+                    $additionalText = " back";
+                }
+
+                if(!$t1)
+                {
+                    echo "[<a href='members.php?add=$userId'>Follow$additionalText</a>]";
+                    echo "&nbsp;";
+                }
+                else
+                {
+                    echo "[<a href='members.php?remove=$userId'>Unfollow</a>]";
+                }
                 echo "</li>";
             }
             echo "</ul>";

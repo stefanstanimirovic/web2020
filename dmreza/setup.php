@@ -34,3 +34,16 @@ createTable('friends',
     FOREIGN KEY(receiver_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE NO ACTION
     '
 );
+
+createTable('messages',
+    'id INT UNSIGNED AUTO_INCREMENT,
+    auth_id INT UNSIGNED NOT NULL,
+    recip_id INT UNSIGNED NOT NULL,
+    pm CHAR(1) NOT NULL,
+    time INT UNSIGNED NOT NULL,
+    message VARCHAR(4096) NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(auth_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE NO ACTION,
+    FOREIGN KEY(recip_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE NO ACTION
+    '
+);
