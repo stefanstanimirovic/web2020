@@ -46,9 +46,13 @@
         <div class="error">
             <?php echo $error; ?>
         </div>
+        <div id="info">
+        </div>
         <form action="signup.php" method="post">
             <label for="username">Username:</label>
-            <input type="text" name="username" id="username" placeholder="Your username...">
+            <input type="text" name="username" id="username" 
+                placeholder="Your username..."
+                onBlur="checkUser(this)">
             <br>
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" placeholder="Your password...">
@@ -57,5 +61,55 @@
         </form>
     </div>
 </div>
+<script>
+    function checkUser(inp)
+    {
+        var username = inp.value;
+        if(username == '') {
+            document.getElementById('info').innerHTML = "";
+            return;
+        }
+
+        // AJAX request
+        var params = "username=" + username;
+        var request = ajaxRequest();
+        if(request !== false) {
+            request.open("POST", "checkuser.php", true);
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.setRequestHeader("Content-length", params.length);
+            request.setRequestHeader("Connection", "close");
+
+            request.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200)
+                {
+                    document.getElementById('info').innerHTML = this.responseText;
+                }
+            }
+
+            request.send(params);
+        }
+    }
+
+    function ajaxRequest()
+    {
+        try {
+            var request = new XMLHttpRequest();
+        }
+        catch(e1) {
+            try {
+                request = new ActiveXObject("Msxm12.XMLHTTP");
+            }
+            catch(e2) {
+                try {
+                    request = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch(e3) {
+                    request = false;
+                }
+            }
+        }
+        return request;
+    }
+</script>
 </body>
 </html>

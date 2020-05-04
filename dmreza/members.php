@@ -123,7 +123,9 @@
                 else
                 {
                     echo "[<a href='members.php?remove=$userId'>Unfollow</a>]";
+                    echo "&nbsp;";
                 }
+                echo "[<a href='messages.php?id=$userId'>Send message</a>]";
                 echo "</li>";
             }
             echo "</ul>";

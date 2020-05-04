@@ -57,3 +57,11 @@
     border-bottom: 2px solid royalblue;
     padding: 15px 0;
 }
+
+.available {
+    color: green;
+}
+
+.taken {
+    color: red;
+}
