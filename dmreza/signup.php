@@ -61,6 +61,7 @@
         </form>
     </div>
 </div>
+<script src="myscript.js"></script>
 <script>
     function checkUser(inp)
     {
@@ -88,27 +89,6 @@
 
             request.send(params);
         }
-    }
-
-    function ajaxRequest()
-    {
-        try {
-            var request = new XMLHttpRequest();
-        }
-        catch(e1) {
-            try {
-                request = new ActiveXObject("Msxm12.XMLHTTP");
-            }
-            catch(e2) {
-                try {
-                    request = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                catch(e3) {
-                    request = false;
-                }
-            }
-        }
-        return request;
     }
 </script>
 </body>
